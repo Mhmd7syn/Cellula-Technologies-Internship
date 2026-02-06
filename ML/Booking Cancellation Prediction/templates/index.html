@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Cancellation Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="number"], select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: calc(100% - 20px);
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .prediction-result {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-container input {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Booking Cancellation Prediction</h1>
+        <form action="/predict" method="post">
+            <label for="number_of_adults">Number of Adults:</label>
+            <input type="number" id="number_of_adults" name="number of adults" value="{{ request.form.get('number of adults', '') }}">
+            
+            <label for="number_of_children">Number of Children:</label>
+            <input type="number" id="number_of_children" name="number of children" value="{{ request.form.get('number of children', '') }}">
+            
+            <label for="number_of_weekend_nights">Number of Weekend Nights:</label>
+            <input type="number" id="number_of_weekend_nights" name="number of weekend nights" value="{{ request.form.get('number of weekend nights', '') }}">
+            
+            <label for="number_of_week_nights">Number of Week Nights:</label>
+            <input type="number" id="number_of_week_nights" name="number of week nights" value="{{ request.form.get('number of week nights', '') }}">
+            
+            <label for="type_of_meal">Type of Meal:</label>
+            <select id="type_of_meal" name="type of meal">
+                {% for option in ['Meal Plan 1', 'Not Selected', 'Meal Plan 2', 'Meal Plan 3'] %}
+                    <option value="{{ option }}" {{ 'selected' if request.form.get('type of meal') == option else '' }}>{{ option }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="checkbox-container">
+                <label for="car_parking_space">Car Parking Space:</label>
+                <input type="checkbox" id="car_parking_space" name="car parking space" value="1" {{ 'checked' if request.form.get('car parking space') == '1' else '' }}>
+                <input type="hidden" name="car parking space" value="0">
+            </div>
+            
+            <label for="room_type">Room Type:</label>
+            <select id="room_type" name="room type">
+                {% for option in ['Room_Type 1', 'Room_Type 4', 'Room_Type 2', 'Room_Type 6', 'Room_Type 5', 'Room_Type 7', 'Room_Type 3'] %}
+                    <option value="{{ option }}" {{ 'selected' if request.form.get('room type') == option else '' }}>{{ option }}</option>
+                {% endfor %}
+            </select>
+            
+            <label for="lead_time">Lead Time:</label>
+            <input type="number" id="lead_time" name="lead time" value="{{ request.form.get('lead time', '') }}">
+            
+            <label for="market_segment_type">Market Segment Type:</label>
+            <select id="market_segment_type" name="market segment type">
+                {% for option in ['Offline', 'Online', 'Corporate', 'Aviation', 'Complementary'] %}
+                    <option value="{{ option }}" {{ 'selected' if request.form.get('market segment type') == option else '' }}>{{ option }}</option>
+                {% endfor %}
+            </select>
+            
+            <div class="checkbox-container">
+                <label for="repeated">Repeated:</label>
+                <input type="checkbox" id="repeated" name="repeated" value="1" {{ 'checked' if request.form.get('repeated') == '1' else '' }}>
+                <input type="hidden" name="repeated" value="0">
+            </div>
+            
+            <label for="P_C">P-C:</label>
+            <input type="number" id="P_C" name="P-C" value="{{ request.form.get('P-C', '') }}">
+            
+            <label for="P_not_C">P-not-C:</label>
+            <input type="number" id="P_not_C" name="P-not-C" value="{{ request.form.get('P-not-C', '') }}">
+            
+            <label for="average_price">Average Price:</label>
+            <input type="number" id="average_price" step="0.01" name="average price" value="{{ request.form.get('average price', '') }}">
+            
+            <label for="special_requests">Special Requests:</label>
+            <input type="number" id="special_requests" name="special requests" value="{{ request.form.get('special requests', '') }}">
+            
+            <label for="date_of_reservation">Date of Reservation:</label>
+            <input type="text" id="date_of_reservation" name="date of reservation" value="{{ request.form.get('date of reservation', '') }}" placeholder="MM/DD/YYYY">
+            
+            <input type="submit" value="Predict">
+        </form>
+        <div class="prediction-result">
+            <label>Prediction Result:</label>
+            <span>{{ prediction }}</span>
+        </div>
+    </div>
+</body>
+</html>

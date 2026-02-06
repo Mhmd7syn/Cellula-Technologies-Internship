@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fare Prediction Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9; /* Bright theme */
+            color: #333;
+            padding: 20px;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-field {
+            margin-bottom: 15px;
+        }
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Fare Prediction Form</h2>
+        <form method="POST" action="/predict">
+            <div class="form-field">
+                <label for="passenger_count">Passenger Count:</label>
+                <input type="number" id="passenger_count" name="passenger_count" min="1" required>
+            </div>
+            <div class="form-field">
+                <label for="distance">Distance (km):</label>
+                <input type="number" id="distance" name="distance" step="0.1" min="0" required>
+            </div>
+            <div class="form-field">
+                <label for="jfk_dist">JFK Distance (km):</label>
+                <input type="number" id="jfk_dist" name="jfk_dist" step="0.1" min="0" required>
+            </div>
+            <div class="form-field">
+                <label for="lga_dist">LGA Distance (km):</label>
+                <input type="number" id="lga_dist" name="lga_dist" step="0.1" min="0" required>
+            </div>
+            <div class="form-field">
+                <label for="car_condition">Car Condition:</label>
+                <select id="car_condition" name="car_condition" required>
+                    <option>Very Good</option>
+                    <option>Excellent</option>
+                    <option>Bad</option>
+                    <option>Good</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="traffic_condition">Traffic Condition:</label>
+                <select id="traffic_condition" name="traffic_condition" required>
+                    <option>Congested Traffic</option>
+                    <option>Flow Traffic</option>
+                    <option>Dense Traffic</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="weather">Weather:</label>
+                <select id="weather" name="weather" required>
+                    <option>windy</option>
+                    <option>cloudy</option>
+                    <option>stormy</option>
+                    <option>sunny</option>
+                    <option>rainy</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="bearing">Bearing:</label>
+                <input type="number" id="bearing" name="bearing" step="0.1" min="-3.2" max="3.2" required>
+            </div>
+            <div class="form-field">
+                <label for="datetime">Datetime:</label>
+                <input type="datetime-local" id="datetime" name="datetime" required>
+            </div>
+            <button type="submit">Predict Fare</button>
+        </form>
+        {% if prediction is not none %}
+        <h3>Predicted Fare: ${{ prediction }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
