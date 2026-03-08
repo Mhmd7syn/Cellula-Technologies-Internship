@@ -1,0 +1,9 @@
+Flask==3.0.3
+torch>=1.8
+segmentation-models-pytorch==0.3.3
+albumentations==1.4.11
+tifffile==2023.7.10
+opencv-python-headless==4.8.0.76
+numpy==1.26.4
+matplotlib==3.8.4
+gunicorn==22.0.0
