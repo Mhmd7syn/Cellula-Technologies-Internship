@@ -4,5 +4,5 @@ This directory contains the certificates and documentation earned during the Cel
 
 ## 📁 Structure
 
-- **`ML/`**: Contains certificates and letters related to the Machine Learning track (e.g., completion certificates, recommendation letters).
-- **`Vision/`**: Contains certificates and letters related to the Computer Vision track, including the project certificate, completion certificate, and recommendation letter.
+- **`ML/`**: Contains certificates and letters related to the Machine Learning track. This includes general internship completion certificates and recommendation letters.
+- **`Vision/`**: Contains certificates and letters related to the Computer Vision track. This includes a track completion certificate, a specific project completion certificate, and a detailed recommendation letter.
